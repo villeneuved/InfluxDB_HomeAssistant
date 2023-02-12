@@ -45,7 +45,7 @@ Home Assistant is using version 1.8.10 as of February 2023.
 The Python client for this version is influxdb 5.3.1
 [influxdb](https://pypi.org/project/influxdb/).
 There is a different Python client for InfluxDB v2, influxdb-client.
-Do not use this one.
+Do not use that one.
 
 ## Install influxdb client
 
@@ -78,3 +78,55 @@ do not have similar measurements.
 
 Note that InfluxDB stores times using the UTC timezone (Greenwich).
 The returned dates will be in this time zone.
+
+The top of the output should looke something like this:
+```
+<influxdb.client.InfluxDBClient object at 0x000002815DDC8400>
+
+InfluxDB version 1.8.10
+
+Databases: [{'name': '_internal'}, {'name': 'Weather_outside'}, {'name': 'homeassistant'}]
+
+Measurements: [{'name': '%'}, {'name': 'AQI'}, {'name': 'GB'}, {'name': 'GiB'}, {'name': 'Lumens'}, {'name': 'Lux'}, {'name': 'MHz'}, {'name': 'Mbps'}, {'name': 'MiB'}, {'name': 'Minutes'}, {'name': 'Pascals'}, {'name': 'UV index'}, {'name': 'W'}, {'name': 'connection(s)'}, {'name': 'dBm'}, {'name': 'degrees'}, {'name': 'hPa'}, {'name': 'kPa'}, {'name': 'km'}, {'name': 'km/h'}, {'name': 'lux'}, {'name': 'lx'}, {'name': 'mm'}, {'name': 'notifications'}, {'name': 'pending update(s)'}, {'name': 'state'}, {'name': 'steps'}, {'name': 'ug/m3'}, {'name': '°'}, {'name': '°C'}]
+
+Measurement -- entity_id
+% -- hallway_light_intensity
+% -- aeotec_limited_zwa005_trisensor_battery_level
+% -- aht10_humidity
+% -- bme280_humidity
+% -- cold_air_return_humidity
+% -- disk_use_percent
+%
+```
+
+## Save the InfluxDB data to a local file
+
+You can analyse the InfluxDB data on Home Assistant using
+the built-in queries.
+However it might be preferable to pull all the data off of
+Home Assistant so that you can analyse on a larger computer
+using Python.  Also, the InfluxDB database gets quite large
+after running for a few years, causing backup files to be large.
+
+A sample program, InfluxDB2File.py, is provided to show how
+all of the values of an entity_id are read into a numpy file.
+
+Here, a list of pairs of measurements (e.g. %) and entity_ids
+(e.g. outdoor_temperature) are entered in the variable entity.
+The date-times and readings are written into the numpy-format file
+for each entity_id.  You will need to change the username and password,
+and probably some entries in entity.
+
+```
+python InfluxDB2File.py
+```
+
+## Reading the local files
+
+The sample program PlotInfluxDBdata.py will read one of the numpy files
+and plot the time series using matplotlib.  Again, you will have to edit the
+code to point to one of your files.
+
+```
+python PlotInfluxDBdata.py
+```
