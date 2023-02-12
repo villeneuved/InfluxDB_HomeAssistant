@@ -99,6 +99,13 @@ Measurement -- entity_id
 %
 ```
 
+## Database queries
+
+InfluxDB uses a query language like SQL.  It is documented at
+(https://docs.influxdata.com/influxdb/cloud/query-data/influxql/explore-data/select/)
+The API used by influxdb Python is at 
+(https://influxdb-python.readthedocs.io/en/latest/api-documentation.html#api-documentation).
+
 ## Save the InfluxDB data to a local file
 
 You can analyse the InfluxDB data on Home Assistant using
