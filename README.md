@@ -110,12 +110,15 @@ after running for a few years, causing backup files to be large.
 
 A sample program, InfluxDB2File.py, is provided to show how
 all of the values of an entity_id are read into a numpy file.
+You will need to change the username and password,
+and probably some entries in entity.
 
 Here, a list of pairs of measurements (e.g. %) and entity_ids
-(e.g. outdoor_temperature) are entered in the variable entity.
+(e.g. outdoor_temperature) are entered in the variable `entity`.
 The date-times and readings are written into the numpy-format file
-for each entity_id.  You will need to change the username and password,
-and probably some entries in entity.
+for each entity_id.  TDate-times are written in POSIX format,
+i.e. floating point numbers with the number of seconds
+after 1 January 1970.  Again, UTC timezone is used.
 
 ```
 python InfluxDB2File.py
@@ -124,8 +127,8 @@ python InfluxDB2File.py
 ## Reading the local files
 
 The sample program PlotInfluxDBdata.py will read one of the numpy files
-and plot the time series using matplotlib.  Again, you will have to edit the
-code to point to one of your files.
+and plot the time series using matplotlib.  All times are in UTC.
+Again, you will have to edit the code to point to one of your files.
 
 ```
 python PlotInfluxDBdata.py
